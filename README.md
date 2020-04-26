@@ -51,3 +51,7 @@ Notes not dissappearing after being deleted. Deletion works but page is not refr
 do not understand what they want with a "*" route. App goes to the homepage without a "/" route and "*" route just breaks it
 ... so I left "*" route commented out
 what to google for the "*" route?
+
+Need to fix readme
+
+Need to figure out how to deploy on heroku...
