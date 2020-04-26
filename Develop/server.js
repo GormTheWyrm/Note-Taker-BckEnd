@@ -75,7 +75,6 @@ app.delete("/api/notes/:id", function (req, res) {
   fs.readFile("./db/db.json", "utf8", function (err, data) {
     let oldNote = JSON.parse(data);
     const targetId = parseInt(req.params.id);
-
     for (i = 1; i < oldNote.length; i++) {
       oldNote[i]
       if (oldNote[i].id === targetId) { //removes target note
@@ -91,55 +90,9 @@ app.delete("/api/notes/:id", function (req, res) {
     updatedData = JSON.stringify(oldNote);
     fs.writeFile("./db/db.json", updatedData, function (err, data) {
       console.log("Note from db.json"); //need to fix ids!
-    });
-    // console.log(oldNote[0]);
-    // console.log(newNote);
-
-  });
-
-  //looks like first note has no id so should not be deleteable...good
-});
-/*  this is the broswer JS...
- return $.ajax({
-    url: "api/notes/" + id,
-    method: "DELETE"
-  });
-*/
-
-
-/*
-  * DELETE `/api/notes/:id` - Should receive a query parameter containing the id of a note to delete. 
-  This means you'll need to find a way to give each note a unique `id` when it's saved. In order to delete a note,
-  you'll need to read all notes from the `db.json` file, 
-  remove the note with the given `id` property, and then rewrite the notes to the `db.json` file.
- 
-*/
-
-
-//Questions
-//use "/*" as path for returning index.html?
-//ask about path module- why use it? it seemsto just be an extra word and comma?
-//posts... any info about them is helpful
-
-/*
- 
-* The application should have a `db.json` file on the backend that will be used to store and retrieve notes using the `fs` module.
-* The following API routes should be created:
-* GET `/api/notes` - Should read the `db.json` file and return all saved notes as JSON.
-*POST `/api/notes` - Should receive a new note to save on the request body, add it to the `db.json` file, 
-and then return the new note to the client.
-* DELETE `/api/notes/:id` - Should receive a query parameter containing the id of a note to delete. 
-This means you'll need to find a way to give each note a unique `id` when it's saved. In order to delete a note, 
-you'll need to read all notes from the `db.json` file, remove the note with the given `id` property, and then rewrite the 
-notes to the `db.json` file.
- 
- 
-*/
-
-//need to create:
-//edit
-//delete
-//1. click pencil should update note and change editable text to new text
+    }); //end writefile
+  }); //end readfile
+}); //end delete
 
 
 
@@ -150,6 +103,7 @@ app.listen(PORT, function () {
 
 
 //current bugs
-//not not appearing on webpage until it refreshes. Can I fix that without touching index.js?
+//note not appearing on webpage until it refreshes. Can I fix that without touching index.js?
 //do not understand what they want with a "*" route. App goes to the homepage without a "/" route and "*" route just breaks it
-//... so I left "*"commented out
+//... so I left "*" route commented out
+//what to google for the "*" route?
