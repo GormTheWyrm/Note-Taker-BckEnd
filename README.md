@@ -1,22 +1,22 @@
 # Note-Taker-BckEnd
 
-...
-...
-
-
-# Unit 11 Express Homework: Note Taker
 
 ## Description
 
 Create an application that can be used to write, save, and delete notes. This application will use an express backend and save and retrieve note data from a JSON file.
 
 * The application frontend has already been created, it's your job to build the backend and connect the two.
+The App can be connected to via 
 
-* The following HTML routes should be created:
+"... " UPDATE WITH HEROKU LOCATION!!!
 
-  * GET `/notes` - Should return the `notes.html` file.
+* The following HTML routes exist:
+- GET "/notes" - returns notes.html file
+- GET "*" - returns index.html file
+- GET "/api/notes" - returns note data via JSON ()
++ clicking the Save Icon with text inside the "Test Title" Note's Header and text area will POST the new note the db.json file, effectively saving that data. The data will then be visible form the "/notes" url page.
++ clicking the Delete Icon will DELETE the relevant note and update the db.json file
 
-  * GET `*` - Should return the `index.html` file
 
 * The application should have a `db.json` file on the backend that will be used to store and retrieve notes using the `fs` module.
 

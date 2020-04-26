@@ -19,37 +19,16 @@ app.use(express.static("public"));
 /*    ~~~~~~~~~~~~~~~~HTML ROUTES~~~~~~~~~~~~~~~~~~ */
 // home page  
 //fix these with some sort of asterix instead of "/"
-// app.get("*", function (req, res){
+// app.get("/", function (req, res){
 // res.sendFile(path.join(__dirname, "/public/index.html"));
 // });
-//anything not /"routegoeshere" will go to /*
+//anything not /"routegoeshere" will go to /* ...allegedly. But adding the code just reaks it
+// "*" does not make sense. It already goes to the home page without even a "/" route
 
 // notes page...
 app.get("/notes", function (req, res) {
   res.sendFile(path.join(__dirname, "/public/notes.html"));
-  //check this
 });
-
-
-// should set up a path so that accidents bring it back to home...
-// dont know how to do this with express yet
-
-
-// write function to post to api/notes... adding info to db.json...
-//need to create an id for each note...
-//...perhaps create a span in the html file? no...
-//notes will be saved in the db.json file...
-//so each note will be an object with a name, text and id field saved as json...
-// so convert to json...after creating object... hmm...
-
-//someting comes from webpage...
-//I need to be able to grab that something
-//then I should save that something as an object
-//-add an id
-//-resave as json
-//-write to db.json
-
-
 
 
 
@@ -65,28 +44,67 @@ app.get("/api/notes", function (req, res) {
 // SAVES NOTE
 app.post("/api/notes", function (req, res) {
   // save title, text and id
-  let oldNote = [];
-  let newNote = {};
 
-  fs.readFile("./db/db.json", "utf8", function(err, data){
+
+  fs.readFile("./db/db.json", "utf8", function (err, data) {
     // console.log(data);
     // console.log(data[0]);
-    oldNote = JSON.parse(data);
-    newNote = req.body; //these are both objects now
-    newNote.id = oldNote.length + 1;
+    let oldNote = JSON.parse(data);
+    let newNote = req.body; //these are both objects now
+    // newNote.id = oldNote.length + 1;
     oldNote.push(newNote);
-    // console.log(oldNote[0]);
-    // console.log(newNote);
+    for (i = 1; i < oldNote.length; i++) {
+      //not doing this in above for loop because afraid that splicing will mess up id numbering
+      oldNote[i].id = i;  //purposefully excluding the first note in this array so user has somehting to write in
+    }
+
     updatedData = JSON.stringify(oldNote);
-    fs.writeFile("./db/db.json", updatedData, function(err, data){
-      // console.log(updatedData);
+    fs.writeFile("./db/db.json", updatedData, function (err, data) {
+      console.log("New Note saved to db.json");
     });
   });
 
-  
+  //note not appearing on html until refreshes...
+  //can I fix this from here? redirect to the notes page perhaps?
+
 });
 
-//app.???("/api/notes/:id")
+app.delete("/api/notes/:id", function (req, res) {
+  // console.log("test");
+  //test worked
+  fs.readFile("./db/db.json", "utf8", function (err, data) {
+    let oldNote = JSON.parse(data);
+    const targetId = parseInt(req.params.id);
+
+    for (i = 1; i < oldNote.length; i++) {
+      oldNote[i]
+      if (oldNote[i].id === targetId) { //removes target note
+        oldNote.splice(i, 1);
+        break;
+      }
+    }
+    for (i = 1; i < oldNote.length; i++) {
+      //not doing this in above for loop because afraid that splicing will mess up id numbering
+      oldNote[i].id = i;  //purposefully excluding the first note in this array so user has somehting to write in
+    }
+    //now write to file
+    updatedData = JSON.stringify(oldNote);
+    fs.writeFile("./db/db.json", updatedData, function (err, data) {
+      console.log("Note from db.json"); //need to fix ids!
+    });
+    // console.log(oldNote[0]);
+    // console.log(newNote);
+
+  });
+
+  //looks like first note has no id so should not be deleteable...good
+});
+/*  this is the broswer JS...
+ return $.ajax({
+    url: "api/notes/" + id,
+    method: "DELETE"
+  });
+*/
 
 
 /*
@@ -94,7 +112,7 @@ app.post("/api/notes", function (req, res) {
   This means you'll need to find a way to give each note a unique `id` when it's saved. In order to delete a note,
   you'll need to read all notes from the `db.json` file, 
   remove the note with the given `id` property, and then rewrite the notes to the `db.json` file.
-
+ 
 */
 
 
@@ -104,7 +122,7 @@ app.post("/api/notes", function (req, res) {
 //posts... any info about them is helpful
 
 /*
-
+ 
 * The application should have a `db.json` file on the backend that will be used to store and retrieve notes using the `fs` module.
 * The following API routes should be created:
 * GET `/api/notes` - Should read the `db.json` file and return all saved notes as JSON.
@@ -114,8 +132,8 @@ and then return the new note to the client.
 This means you'll need to find a way to give each note a unique `id` when it's saved. In order to delete a note, 
 you'll need to read all notes from the `db.json` file, remove the note with the given `id` property, and then rewrite the 
 notes to the `db.json` file.
-
-
+ 
+ 
 */
 
 //need to create:
@@ -129,3 +147,9 @@ notes to the `db.json` file.
 app.listen(PORT, function () {
   console.log("Server is a go on port " + PORT);
 });
+
+
+//current bugs
+//not not appearing on webpage until it refreshes. Can I fix that without touching index.js?
+//do not understand what they want with a "*" route. App goes to the homepage without a "/" route and "*" route just breaks it
+//... so I left "*"commented out
