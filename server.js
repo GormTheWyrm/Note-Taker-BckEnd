@@ -14,24 +14,9 @@ app.use(express.static("public"));
 
 
 
-/*    ~~~~~~~~~~~~~~~~HTML ROUTES~~~~~~~~~~~~~~~~~~ */
-// home page    ~~BROKEN~~
-//fix these with some sort of asterix instead of "/"
-// app.get("/", function (req, res){
-// res.sendFile(path.join(__dirname, "/public/index.html"));
-// });
-//anything not /"routegoeshere" will go to /* ...allegedly. But adding the code just reaks it
-// "*" does not make sense. It already goes to the home page without even a "/" route
-
-// notes page...
-app.get("/notes", function (req, res) {
-  res.sendFile(path.join(__dirname, "/public/notes.html"));
-});
 
 
 
-
-/*    ~~~~~~~~~~~~~~~~ END HTML ROUTES~~~~~~~~~~~~~~~~~~ */
 /*    ~~~~~~~~~~~~~~~~ API ROUTES~~~~~~~~~~~~~~~~~~~~~~~ */
 // GETS INFO FOR API
 app.get("/api/notes", function (req, res) {
@@ -98,6 +83,18 @@ app.delete("/api/notes/:id", function (req, res) {
 
  */
 }); //end delete
+
+
+/*    ~~~~~~~~~~~~~~~~HTML ROUTES~~~~~~~~~~~~~~~~~~ */
+
+// notes page...
+app.get("/notes", function (req, res) {
+  res.sendFile(path.join(__dirname, "./public/notes.html"));
+});
+app.get("*", function (req, res){
+res.sendFile(path.join(__dirname, "./public/index.html"));
+});
+
 
 
 
