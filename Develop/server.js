@@ -1,5 +1,3 @@
-// read this https://expressjs.com/en/guide/routing.html
-// look up app.use for express
 //consider making a route file
 //dependencies
 const fs = require("fs");
@@ -12,12 +10,12 @@ const PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
-// could put something here to app.use and pull in route files
+// could put something here to app.use and pull in route files... If I restructure my folders
 
 
 
 /*    ~~~~~~~~~~~~~~~~HTML ROUTES~~~~~~~~~~~~~~~~~~ */
-// home page  
+// home page    ~~BROKEN~~
 //fix these with some sort of asterix instead of "/"
 // app.get("/", function (req, res){
 // res.sendFile(path.join(__dirname, "/public/index.html"));
@@ -39,13 +37,10 @@ app.get("/notes", function (req, res) {
 app.get("/api/notes", function (req, res) {
   res.sendFile(path.join(__dirname, "/db/db.json"));
   //catch errors... needs implementation
-  //...json file is array?
 });
 // SAVES NOTE
 app.post("/api/notes", function (req, res) {
   // save title, text and id
-
-
   fs.readFile("./db/db.json", "utf8", function (err, data) {
     // console.log(data);
     // console.log(data[0]);
@@ -62,16 +57,15 @@ app.post("/api/notes", function (req, res) {
     fs.writeFile("./db/db.json", updatedData, function (err, data) {
       console.log("New Note saved to db.json");
     });
-  });
+  }); //end readfile
 
-  //note not appearing on html until refreshes...
-  //can I fix this from here? redirect to the notes page perhaps?
 
-});
+  res.redirect("/notes");
+
+
+}); //end post function
 
 app.delete("/api/notes/:id", function (req, res) {
-  // console.log("test");
-  //test worked
   fs.readFile("./db/db.json", "utf8", function (err, data) {
     let oldNote = JSON.parse(data);
     const targetId = parseInt(req.params.id);
@@ -92,6 +86,17 @@ app.delete("/api/notes/:id", function (req, res) {
       console.log("Note from db.json"); //need to fix ids!
     }); //end writefile
   }); //end readfile
+
+  /*
+  BUG
+ req.method = "GET";
+ res.redirect("/notes");
+ https://stackoverflow.com/questions/24750169/expressjs-res-redirect-after-delete-request
+ https://expressjs.com/en/4x/api.html#res.redirect
+ looks like redirect is not yet implemented for delete method...
+ maybe the next() function will help somehow?
+
+ */
 }); //end delete
 
 
@@ -104,10 +109,14 @@ app.listen(PORT, function () {
 
 //current bugs
 /*
-notes not appearing on webpage until it refreshes. Can I fix that without touching index.js?
-//--this is issue because notes will delete but not dissippear, meaning users will likely try to delete them twice and cause loss of work
+Notes not dissappearing after being deleted. Deletion works but page is not refreshed or redirected so user does not see it.
 
 do not understand what they want with a "*" route. App goes to the homepage without a "/" route and "*" route just breaks it
 ... so I left "*" route commented out
 what to google for the "*" route?
+https://expressjs.com/en/guide/routing.html
+
+needs some errorhandling/catching
+
+check my delete function. I am not sure if I am using :id right... or at all
 */
