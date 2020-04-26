@@ -44,3 +44,11 @@ You are required to submit the following:
 
 * The URL of the GitHub repository
 
+## current bugs
+
+notes not appearing on webpage until it refreshes. Can I fix that without touching index.js?
+//--this is issue because notes will delete but not dissippear, meaning users will likely try to delete them twice and cause loss of work
+
+do not understand what they want with a "*" route. App goes to the homepage without a "/" route and "*" route just breaks it
+... so I left "*" route commented out
+what to google for the "*" route?
