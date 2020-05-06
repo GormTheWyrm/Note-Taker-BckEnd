@@ -1,57 +1,27 @@
 # Note-Taker-BckEnd
+This application was a homework assignment for the 2020 Richmond University Web Development Bootcamp. Trilogy Education Services wrote a front end application that allows a user to write notes on a page. My job was to write the backend so that the user could save and delete notes.
+
+## Dependencies and Installation
+
+To open the app on your local machine:
+This application is dependent on the node express module.
+To install, clone the repository at
+https://github.com/GormTheWyrm/Note-Taker-BckEnd
+Open the repository root folder in node terminal and run  
+"node server.js"  
+This will start the server. Next open a web browser and navigate to http://localhost:8080/ and click on "get started".
+
+Alternatively, open the deployed app at https://note-taker-backend.herokuapp.com/
+Click the "get started".  
 
 
-## Description
+From there users can write a note. Once the user types something in both the title and note body the note can be saved by clicking the save icon in the top right corner of the page. Notes need to have a title and text in the body in order to be saved. If either field lacks text the save icon will not appear.  
+Saved notes appear along the left side of the screen and can be deleted by clicking the red trash can icon.  
 
-Create an application that can be used to write, save, and delete notes. This application will use an express backend and save and retrieve note data from a JSON file.
+Added notes should appear automatically once saved. However, the page needs to be manually refreshed for deleted notes to visibly refresh. 
 
-* The application frontend has already been created, it's your job to build the backend and connect the two.
-The App can be connected to via 
-
-"... " UPDATE WITH HEROKU LOCATION!!!
-
-* The following HTML routes exist:
-- GET "/notes" - returns notes.html file
-- GET "*" - returns index.html file
-- GET "/api/notes" - returns note data via JSON ()
-+ clicking the Save Icon with text inside the "Test Title" Note's Header and text area will POST the new note the db.json file, effectively saving that data. The data will then be visible form the "/notes" url page.
-+ clicking the Delete Icon will DELETE the relevant note and update the db.json file. Deletion is based on an id which is generated each time a note is saved or deleted.
-
-
-
-
-## User Story
-
-AS A user, I want to be able to write and save notes
-
-I WANT to be able to delete notes I've written before
-
-SO THAT I can organize my thoughts and keep track of tasks I need to complete
-
-## Business Context
-
-For users that need to keep track of a lot of information, it's easy to forget or be unable to recall something important. Being able to take persistent notes allows users to have written information available when needed.
-
-
-
-
-
-## Submission on BCS
-
-You are required to submit the following:
-
-* The URL of the deployed application
-
-* The URL of the GitHub repository
 
 ## current bugs
 
-Notes not dissappearing after being deleted. Deletion works but page is not refreshed or redirected so user does not see it.
-
-do not understand what they want with a "*" route. App goes to the homepage without a "/" route and "*" route just breaks it
-... so I left "*" route commented out
-what to google for the "*" route?
-
-Need to fix readme
-
-Need to figure out how to deploy on heroku...
+Hitting the delete button multiple times will cause the notes below the targeted note to be deleted.  
+*This is a current known bug.*  

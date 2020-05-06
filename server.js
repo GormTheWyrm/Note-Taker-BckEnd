@@ -72,10 +72,12 @@ app.delete("/api/notes/:id", function (req, res) {
     }); //end writefile
   }); //end readfile
 
+
+  // res.redirect(302, "/notes");
   /*
   BUG
  req.method = "GET";
- res.redirect("/notes");
+ 
  https://stackoverflow.com/questions/24750169/expressjs-res-redirect-after-delete-request
  https://expressjs.com/en/4x/api.html#res.redirect
  looks like redirect is not yet implemented for delete method...
